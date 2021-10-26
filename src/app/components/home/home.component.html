@@ -1,0 +1,115 @@
+<section>
+  <div class="container-fluid">
+  <div class="row">
+    <aside class="col-xl-2 col-xxl-3">
+      <ul class="nav flex-column h-100 justify-content-around">
+        <li class="nav-item" *ngFor="let fav of mydata.favorite">
+          {{ fav }}
+        </li>
+      </ul>
+    </aside>
+    <div class="col-xl-10 col-xxl-9 px-4 home">
+      <div class="d-flex">
+        <h1>{{ store1.Name }}</h1>
+        <img [src]="store1.Logo" alt="" />
+      </div>
+      <!-- bouns -->
+      <!-- dropdown -->
+      <div class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          category
+        </button>
+        <ul
+          class="dropdown-menu"
+          aria-labelledby="dropdownMenuButton1"
+          [(ngModel)]="selectedCategory"
+        >
+          <li><a class="dropdown-item" (click)="getValue(0)">All</a></li>
+          <li *ngFor="let category of categoryList">
+            <a class="dropdown-item"  (click)="getValue(category.ID)">{{
+              category.Name
+            }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <div></div>
+      </div>
+      <table class="table table-striped table-hover" [hidden]="!isTableHidden">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">birthDate</th>
+            <th scope="col">img</th>
+            <th scope="col">credit card</th>
+            <th scope="col">Details</th>
+            <th scope="col">BUY</th>
+            <!-- <th scope="col">Price</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let prd of selectedCategoryproducts(); let item = index"
+            [ngStyle]="{ backgroundColor: prd.Quantity == 1 ? 'yellow' : '' }"
+            [hidden]="!prd.Quantity"
+          >
+            <th>{{ item + 1 }}</th>
+            <th>{{ prd.ID }}</th>
+            <td>{{ prd.Name }}</td>
+            <td>{{ prd.Quantity }}</td>
+            <td>{{ prd.Price | currency }}</td>
+            <td>{{ prd.clientID | nationaID }}</td>
+            <td>
+              <div appProductCard class="test">
+                <img src="{{ prd.Img }}" class="img-fluid image" alt="" />
+              </div>
+            </td>
+            <td>{{ "1234567891234567" | creditCardFormat }}</td>
+            <td>
+              <button
+                [routerLink]="[
+                  '/Products/',
+                  prd.ID,
+                  selectedCategoryproducts().length
+                ]"
+              >
+                Details
+              </button>
+            </td>
+            <td>
+              <button (click)="oneSoldSoDecrease(prd.ID - 1)">BUY</button>
+              <!-- prd.id does not make sense-->
+              <!-- item make sense but have a problem in choice category /////////////////////////////////////////-->
+              <!-- style does not make any any sense/////////////////////////////////////////-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <input
+        class="form-control form-control-lg"
+        type="text"
+        [(ngModel)]="clientName"
+        placeholder="your name"
+        aria-label=".form-control-lg example"
+      />
+
+      <p>your name is : {{ clientName }}</p>
+      <input type="button" value="Buy" (click)="toggleSold()" />
+      <div [hidden]="!isTableHidden" >Thanks for purchasing from our Store {{clientName}} Entered</div>
+      <!--  -->
+    </div>
+  </div>
+</div>
+</section>

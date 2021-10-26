@@ -1,0 +1,43 @@
+<!-- <p>cart-parent works!</p> -->
+<div class="container-fluid">
+  <!-- col-xl-10 col-xxl-9 -->
+<div class=" px-4 home">
+  <div class="dropdown">
+    <button
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      id="dropdownMenuButton1"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      category
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" [(ngModel)] = "selectedCategory">
+      <li > <a class="dropdown-item"  (click) = "getValue(0)">All</a></li>
+      <li *ngFor="let category of categoryList" (click) = "getValue(category.ID)" >
+        <a class="dropdown-item"  >{{ category.Name }}</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ///////////////////// -->
+  <app-cart-child [selectedCategoryFromNested]="selectedCategory"  (totalPriceChanged)= "onTotalPriceChanged($event)"></app-cart-child>
+  <!-- /////////////////// -->
+  <div>
+    <div></div>
+  </div>
+  <h3>Total Order Price: {{totalPriceForBoughtItems}}</h3>
+  <input
+    class="form-control form-control-lg"
+    type="text"
+    [(ngModel)]="clientName"
+    placeholder="your name"
+    aria-label=".form-control-lg example"
+  />
+
+  <p>your name is : {{ clientName }}</p>
+  <input type="button" value="Buy" (click)="toggleSold()" />
+  <div [hidden]="isTableHidden">Thanks for purchasing from our Store {{clientName}} Entered</div>
+</div>
+
+</div>

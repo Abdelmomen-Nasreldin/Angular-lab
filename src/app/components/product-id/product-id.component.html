@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="card" style="width: 18rem">
+    <div>
+    <img [src]="product?.Img" class="card-img-top img-fluid " style="height: 100% !important;" alt="..." /></div>
+    <div class="card-body">
+      <h5 class="card-title">{{product?.Name}}</h5>
+      <p class="card-text">
+        Some quick example text to build on the card title and make up the bulk
+        of the card's content.
+      </p>
+      <p>price {{product?.Price}}</p>
+      <p>amount {{product?.Quantity}}</p>
+      <div class="">
+        <button (click)="previousProduct()" class="btn btn-primary m-3" [disabled]="product?.ID ==1">Previous</button>
+        <button (click)="nextProduct()" class="btn btn-primary" [disabled]="product?.ID == totalProducts">Next</button>
+         <!-- <button (click)="nextProduct()" class="btn btn-primary" [disabled]="disableNextButton(product?.ID)">Next</button> -->
+      </div>
+      <br>
+      <a (click)="goBack()" class="btn btn-primary mx-3">Go Back</a>
+    </div>
+  </div>
+</div>

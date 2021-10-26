@@ -1,0 +1,53 @@
+<!-- <p>cart-child works!</p> -->
+<!-- [hidden]="!isTableHidden" -->
+<table class="table table-striped table-hover" >
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price</th>
+      <th scope="col">birthDate</th>
+      <th scope="col">img</th>
+      <th scope="col">credit card</th>
+      <th scope="col">number</th>
+      <th scope="col">Details</th>
+      <th scope="col">BUY</th>
+      <!-- <th scope="col">Price</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let prd of prdListForSelCat; let item = index" [ngStyle]="{backgroundColor: prd.Quantity==1?'yellow':''}" [hidden] = "!prd.Quantity" >
+      <th>{{ item + 1 }}</th>
+      <th >{{ prd.ID}}</th>
+      <td >{{ prd.Name }}</td>  <!-- nationaID:1234567896 -->
+      <td>{{ prd.Quantity }}</td>
+      <td>{{ prd.Price | currency }}</td>
+      <td>{{ prd.clientID |  nationaID}}</td>
+      <td ><div appProductCard class="test"><img src="{{ prd.Img }}" class="img-fluid image" alt="" alt="" srcset=""></div></td>
+      <td>{{"1234567891234567" | creditCardFormat}} </td>
+      <td><button (click) = "decreaseQuantityToBuy()">-</button>
+        <input type="number" name="" id="amount" [(ngModel)]="amountToBuy" #boughtCount>
+      <button (click) = "increseQuantityToBuy()">+</button>
+    <!-- <span>{{amountToBuy}}</span> -->
+    </td>
+    <td>
+      <button
+        [routerLink]="[
+          '/Products/',
+          prd.ID,
+          prdListForSelCat.length
+        ]"
+      >
+        Details
+      </button>
+    </td>
+      <td><button (click) = "oneSoldSoDecrease(item);addToShopCartAllItems(); boughtCountValue() ;calcTotalPrice(prd.Price, boughtCount.value)">BUY</button>
+        <!-- prd.id does not make sense-->
+        <!-- item make sense but have a problem in choice category /////////////////////////////////////////-->
+        <!-- style does not make any any sense/////////////////////////////////////////-->
+      </td>
+    </tr>
+  </tbody>
+</table>
