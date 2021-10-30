@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from 'src/app/viewmodel/store';
 import { MyData } from '../shared/my-data';
 import { ICategory } from 'src/app/viewmodel/icategory';
+import { DataFromApiService } from 'src/app/Services/data-from-api.service';
 
 @Component({
   selector: 'app-home',
@@ -38,6 +39,9 @@ export class HomeComponent implements OnInit {
       return this.productList.filter(
         (item) => item.CateogryID == this.selectedCategory
       );
+      // this.httpServer.getProductsByCatID().subscribe((p)=>{
+      //   this.productList = categoryList.p
+      // })
     } else {
       return this.productList;
     }
@@ -47,9 +51,21 @@ export class HomeComponent implements OnInit {
     this.productList[i].Quantity--;
   }
   // productDetails(id: number){
+  //   decrease(inputVal: any, product: IProduct) {
+  //     if (inputVal.value > 0) {
+  //       product.Quantity++;
+  //       inputVal.value--;
+  //     }}
 
-  // }
-  constructor() {
+  // increase(inputVal: any, product: IProduct) {
+  //   this.productNeededCount = +inputVal.value;
+  //   if (product.Quantity) {
+  //     product.Quantity--;
+  //     inputVal.value++;
+  //   } else {
+  //     alert('There is Not Enough Quantity');
+  //   }}
+  constructor(private httpServer : DataFromApiService) {
     // this.selectedCategory = 0;
     this.samsungCategory = {
       ID: 1,

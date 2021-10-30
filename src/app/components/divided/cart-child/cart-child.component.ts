@@ -1,16 +1,20 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { DataFromApiService } from 'src/app/Services/data-from-api.service';
 import { ProductsServiceService } from 'src/app/Services/products-service.service';
 import { ICategory } from 'src/app/viewmodel/icategory';
 import { IProduct } from 'src/app/viewmodel/iproduct';
 import { ShoppingCartItems } from 'src/app/viewmodel/shopping-cart-items';
+import { filter, map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cart-child',
   templateUrl: './cart-child.component.html',
   styleUrls: ['./cart-child.component.scss']
 })
-export class CartChildComponent implements OnInit, OnChanges, AfterViewInit {
+export class CartChildComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   // productList: IProduct[];
+  subscription : Subscription[] = []
   prdListForSelCat: IProduct[]=[];
   totalOrderPrice: number
   samsungCategory: ICategory;
@@ -56,7 +60,7 @@ export class CartChildComponent implements OnInit, OnChanges, AfterViewInit {
     // this.shopCartAllItems.push(this.shopCartItem)
     // console.log(this.shopCartAllItems)
   }
-  constructor(private productService: ProductsServiceService) {
+  constructor(private productService: ProductsServiceService, private httpServer : DataFromApiService) {
 
     this.totalOrderPrice= 0;
     this.amountToBuy = 0;
@@ -149,18 +153,47 @@ export class CartChildComponent implements OnInit, OnChanges, AfterViewInit {
       selectedQuantity: this.amountToBuy
     }
   }
+  ngOnDestroy(): void {
+    for (const sub of this.subscription) {
+sub.unsubscribe();
+console.log('unsubscribe successfully')
+    }
+  }
   ngAfterViewInit(): void {
 this.boughtCount.nativeElement.style.backgroundColor =" #000"
   }
   ngOnChanges(changes: SimpleChanges): void {
+    let sub1 , sub2;
     if (this.selectedCategoryFromNested != 0) {
-      this.prdListForSelCat = this.productService.getProductsByCatID(this.selectedCategoryFromNested)
+      // this.prdListForSelCat = this.productService.getProductsByCatID(this.selectedCategoryFromNested)
+      sub1 = this.httpServer.getProductsByCatID(this.selectedCategoryFromNested)
+
+      .subscribe((products)=>{
+        this.prdListForSelCat = products
+      })
+      this.subscription.push(sub1)
+
     } else {
       // this.prdListForSelCat=Array.from(this.productList)
-      this.prdListForSelCat=this.productService.getAllProducts()
+      // this.prdListForSelCat=this.productService.getAllProducts()
+      sub2 =  this.httpServer.getAllProducts().subscribe((products)=>{
+        this.prdListForSelCat = products;
+        //
+      })
+      this.subscription.push(sub2)
+      // =this.productService.getAllProducts()
 
     }
-    // console.log(this.amountToBuy)
+    // this.httpServer.getProductByID().subscribe((product)=>{
+
+    // })
+  }
+  addProduct(){
+
+    let sub3 =  this.httpServer.addProduct(33).subscribe((product)=>{
+      this.prdListForSelCat.push(product);
+
+    })
   }
 
   ngOnInit(): void {

@@ -1,3 +1,4 @@
+import { NewProductComponent } from './../new-product/new-product.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,6 +14,7 @@ const routes : Routes = [
   {path:'editProfile', component: EditProfileComponent, canActivate: [UserAuthGuard]},
   {path:'login', component: LoginComponent},
   {path:'', redirectTo:'/User/profile', pathMatch:'full'},
+  {path:'admin/insertproduct', component: NewProductComponent},
   {path:'**', component: NotFoundComponent},
 ]
 

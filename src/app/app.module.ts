@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { InfoComponent } from './components/info/info.component';
 import { ProductIDComponent } from './components/product-id/product-id.component';
+import { NewProductComponent } from './components/new-product/new-product.component';
 
 @NgModule({
   declarations: [
@@ -35,13 +37,15 @@ import { ProductIDComponent } from './components/product-id/product-id.component
     ContactComponent,
     InfoComponent,
     ProductIDComponent,
+    NewProductComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

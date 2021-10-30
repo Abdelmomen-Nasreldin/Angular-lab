@@ -101,4 +101,15 @@ export class ProductsServiceService {
 	getProductByID(prodID : number): IProduct | undefined {
     return this.productList.find(item => item.ID == prodID)
   }
+  // getAllProducts(): IProduct[] {
+  //   return this.productList;
+  // }
+  // getProductsByCatID(selectedCategoryFromNested: number): IProduct[] {
+  //   return this.productList.filter(
+  //     (item) => item.CateogryID == selectedCategoryFromNested
+  //   );
+  // }
+	// getProductByID(prodID : number): IProduct | undefined {
+  //   return this.productList.find(item => item.ID == prodID)
+  // }
 }
